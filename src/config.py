@@ -29,74 +29,32 @@ CHUNK_SIZE = 100000  # Number of rows to read at a time
 SAMPLE_SIZE = 1000000  # Number of rows for initial sampling
 RANDOM_STATE = 42  # For reproducibility
 
+# Expected columns in the current dataset
+EXPECTED_COLUMNS = [
+    'Passenger ID', 'First Name', 'Last Name', 'Gender', 'Age', 
+    'Nationality', 'Airport Name', 'Airport Country Code', 'Country Name', 
+    'Airport Continent', 'Continents', 'Departure Date', 'Arrival Airport', 
+    'Pilot Name', 'Flight Status'
+]
+
 # Memory optimization: Data type mappings
-# These will be applied when loading the dataset to reduce memory usage
 DTYPE_MAPPINGS = {
-    # Categorical columns (will be converted to 'category' dtype)
     'categorical': [
-        'AIRLINE',
-        'ORIGIN_AIRPORT',
-        'DESTINATION_AIRPORT',
-        'CANCELLATION_REASON',
-        'DAY_OF_WEEK',
-        'TAIL_NUMBER'
+        'Gender', 'Nationality', 'Airport Name', 'Airport Country Code', 
+        'Country Name', 'Airport Continent', 'Continents', 
+        'Arrival Airport', 'Flight Status'
     ],
-    
-    # Integer columns (will be converted to int16 or int32 as appropriate)
     'integer': {
-        'YEAR': 'int16',
-        'MONTH': 'int8',
-        'DAY': 'int8',
-        'DAY_OF_WEEK': 'int8',
-        'FLIGHT_NUMBER': 'int16',
-        'SCHEDULED_DEPARTURE': 'int16',
-        'DEPARTURE_TIME': 'int16',
-        'DEPARTURE_DELAY': 'float32',
-        'TAXI_OUT': 'float32',
-        'WHEELS_OFF': 'int16',
-        'SCHEDULED_TIME': 'int16',
-        'ELAPSED_TIME': 'float32',
-        'AIR_TIME': 'float32',
-        'DISTANCE': 'int16',
-        'WHEELS_ON': 'int16',
-        'TAXI_IN': 'float32',
-        'SCHEDULED_ARRIVAL': 'int16',
-        'ARRIVAL_TIME': 'int16',
-        'ARRIVAL_DELAY': 'float32',
-        'DIVERTED': 'int8',
-        'CANCELLED': 'int8',
-        'CARRIER_DELAY': 'float32',
-        'WEATHER_DELAY': 'float32',
-        'NAS_DELAY': 'float32',
-        'SECURITY_DELAY': 'float32',
-        'LATE_AIRCRAFT_DELAY': 'float32'
+        'Age': 'int8'
     }
 }
 
-# Expected columns in the dataset (will be updated after initial exploration)
-EXPECTED_COLUMNS = [
-    'YEAR', 'MONTH', 'DAY', 'DAY_OF_WEEK',
-    'AIRLINE', 'FLIGHT_NUMBER', 'TAIL_NUMBER',
-    'ORIGIN_AIRPORT', 'DESTINATION_AIRPORT',
-    'SCHEDULED_DEPARTURE', 'DEPARTURE_TIME', 'DEPARTURE_DELAY',
-    'TAXI_OUT', 'WHEELS_OFF', 'SCHEDULED_TIME', 'ELAPSED_TIME',
-    'AIR_TIME', 'DISTANCE', 'WHEELS_ON', 'TAXI_IN',
-    'SCHEDULED_ARRIVAL', 'ARRIVAL_TIME', 'ARRIVAL_DELAY',
-    'DIVERTED', 'CANCELLED', 'CANCELLATION_REASON',
-    'CARRIER_DELAY', 'WEATHER_DELAY', 'NAS_DELAY',
-    'SECURITY_DELAY', 'LATE_AIRCRAFT_DELAY'
-]
+# Key Status Values
+FLIGHT_STATUS_VALUES = ['On Time', 'Delayed', 'Cancelled']
 
-# Delay-related columns
-DELAY_COLUMNS = [
-    'DEPARTURE_DELAY',
-    'ARRIVAL_DELAY',
-    'CARRIER_DELAY',
-    'WEATHER_DELAY',
-    'NAS_DELAY',
-    'SECURITY_DELAY',
-    'LATE_AIRCRAFT_DELAY'
-]
+# This dataset does not have fine-grained delay columns
+# We will use 'Flight Status' for analysis
+DELAY_COLUMNS = ['Flight Status']
 
 # Key Performance Indicators (KPIs)
 KPIS = {

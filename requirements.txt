@@ -21,4 +21,5 @@ kaggle>=1.5.13
 
 # Utilities
 tqdm>=4.65.0
-openpyxl>=3.1.0
+openpyxl>=3.1.5
+pyarrow>=14.0.0

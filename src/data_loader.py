@@ -12,7 +12,8 @@ import warnings
 
 from src.config import (
     RAW_DATA_DIR, PROCESSED_DATA_DIR, SAMPLES_DATA_DIR,
-    CHUNK_SIZE, SAMPLE_SIZE, RANDOM_STATE, DTYPE_MAPPINGS
+    CHUNK_SIZE, SAMPLE_SIZE, RANDOM_STATE, DTYPE_MAPPINGS,
+    DELAY_COLUMNS
 )
 
 
@@ -148,9 +149,11 @@ def optimize_dataframe_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     # Convert categorical columns
     for col in DTYPE_MAPPINGS['categorical']:
         if col in df_optimized.columns:
-            df_optimized[col] = df_optimized[col].astype('category')
+            # Check if it's already categorical
+            if not isinstance(df_optimized[col].dtype, pd.CategoricalDtype):
+                df_optimized[col] = df_optimized[col].astype('category')
     
-    # Convert integer/float columns
+    # Convert integer columns
     for col, dtype in DTYPE_MAPPINGS['integer'].items():
         if col in df_optimized.columns:
             try:
@@ -160,6 +163,49 @@ def optimize_dataframe_dtypes(df: pd.DataFrame) -> pd.DataFrame:
                 warnings.warn(f"Could not convert {col} to {dtype}")
     
     return df_optimized
+
+
+def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Apply standard preprocessing to the airline dataset.
+    - Handles nulls in Flight Status
+    - Formats Departure Date
+    
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        Input dataframe
+        
+    Returns:
+    --------
+    pd.DataFrame
+        Preprocessed dataframe
+    """
+    df_clean = df.copy()
+    
+    # 1. Handle Nulls
+    # Fill nulls in Flight Status
+    if 'Flight Status' in df_clean.columns:
+        # If it's a category, we need to add 'Unknown' to categories first
+        if isinstance(df_clean['Flight Status'].dtype, pd.CategoricalDtype):
+            if 'Unknown' not in df_clean['Flight Status'].cat.categories:
+                df_clean['Flight Status'] = df_clean['Flight Status'].cat.add_categories('Unknown')
+        df_clean['Flight Status'] = df_clean['Flight Status'].fillna('Unknown')
+            
+    # 2. Format Datetime Columns
+    # Convert 'Departure Date' to datetime
+    if 'Departure Date' in df_clean.columns:
+        # If it was categorical, convert to string first for reliable parsing
+        # The observed format is MM/DD/YYYY (e.g., 6/28/2022)
+        df_clean['DEPARTURE_DATE'] = pd.to_datetime(
+            df_clean['Departure Date'].astype(str), 
+            format='%m/%d/%Y', 
+            errors='coerce'
+        )
+        
+    print(f"Preprocessed {len(df_clean):,} rows")
+    
+    return df_clean
 
 
 def get_memory_usage(df: pd.DataFrame, detailed: bool = False) -> Dict:
