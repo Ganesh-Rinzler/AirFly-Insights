@@ -75,3 +75,26 @@ COLOR_PALETTE = 'Set2'
 # Analysis thresholds
 ON_TIME_THRESHOLD = 15  # minutes - flights delayed less than this are considered on-time
 SIGNIFICANT_DELAY_THRESHOLD = 60  # minutes - delays above this are considered significant
+
+# Season mappings (month number -> season)
+SEASON_MAP = {
+    12: 'Winter', 1: 'Winter', 2: 'Winter',
+    3: 'Spring', 4: 'Spring', 5: 'Spring',
+    6: 'Summer', 7: 'Summer', 8: 'Summer',
+    9: 'Fall', 10: 'Fall', 11: 'Fall'
+}
+SEASON_ORDER = ['Winter', 'Spring', 'Summer', 'Fall']
+
+# Delay severity bins and labels
+DELAY_SEVERITY_BINS = [-float('inf'), -5, 0, 15, 60, 120, float('inf')]
+DELAY_SEVERITY_LABELS = ['Early', 'On Time', 'Minor', 'Moderate', 'Severe', 'Extreme']
+
+# Time-of-day period order
+PERIOD_ORDER = ['Morning', 'Afternoon', 'Evening', 'Night']
+
+# Month name order
+MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+               'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+# Day name order
+DAY_ORDER = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

@@ -19,6 +19,9 @@ scipy>=1.10.0
 # Optional: Kaggle API for dataset download
 kaggle>=1.5.13
 
+# Dashboard
+streamlit>=1.30.0
+
 # Utilities
 tqdm>=4.65.0
 openpyxl>=3.1.5
