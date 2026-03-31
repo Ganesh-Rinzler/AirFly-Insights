@@ -21,6 +21,9 @@ kaggle>=1.5.13
 
 # Dashboard
 streamlit>=1.30.0
+dash>=2.14.0
+dash-bootstrap-components>=1.5.0
+gunicorn>=21.2.0
 
 # Utilities
 tqdm>=4.65.0
