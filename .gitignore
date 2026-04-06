@@ -15,19 +15,12 @@ ENV/
 
 # Data files (too large for git)
 data/raw/
-data/processed/
 data/samples/
-*.csv
 *.zip
-*.parquet
+# NOTE: data/processed/ and outputs/figures/ are intentionally tracked on this branch for deployment
 
 # Outputs
-outputs/figures/
 outputs/reports/
-*.png
-*.jpg
-*.jpeg
-*.pdf
 
 # IDE
 .vscode/
