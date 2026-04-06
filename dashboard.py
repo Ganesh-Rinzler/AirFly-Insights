@@ -56,7 +56,7 @@ NAV_ITEMS = [
 
 # ── Data Loading ──────────────────────────────────────────────────────────────
 _df_cache = None
-
+ 
 def get_data():
     global _df_cache
     if _df_cache is None:

@@ -42,4 +42,3 @@ Since the dataset has no raw cancellation-cause column, proxy methodology was ap
 
 ---
 
-**Status:** Milestone 3 (Weeks 5–6) complete. Dashboard now has 7 pages covering all analyses from MS2 and MS3.
